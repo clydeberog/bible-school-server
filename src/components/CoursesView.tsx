@@ -121,8 +121,8 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             aria-labelledby="welcome-banner-heading"
             className="rounded-xl border border-[#E5DFD3] bg-[#F5F1E8]/70 p-6 sm:p-10"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+              <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
                   New Life Fundamental Baptist Church &middot; Leyte, Philippines
                 </p>
@@ -158,7 +158,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                 </div>
               </div>
 
-              <div className="lg:col-span-4">
+              <div className="w-full lg:w-[360px] shrink-0">
                 <div className="rounded-lg border border-[#E5DFD3] bg-white p-5 sm:p-6">
                   <div className="flex items-center gap-3">
                     <img
@@ -167,7 +167,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                       referrerPolicy="no-referrer"
                       className="h-12 w-12 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
                     />
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-serif text-lg font-semibold text-[#1E293B] leading-snug">
                         Worship &amp; Fellowship
                       </p>

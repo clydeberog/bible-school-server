@@ -582,6 +582,12 @@ async function startServer() {
       res.sendFile(path.join(distDir, 'index.html'));
     });
   } else {
+    app.use((req, res, next) => {
+      if (req.path.startsWith('/src/') || req.path === '/' || req.path.endsWith('.css')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      }
+      next();
+    });
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
