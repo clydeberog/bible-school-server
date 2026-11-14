@@ -232,8 +232,11 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
           </span>
           <button
             type="button"
-            onClick={onReconnectWorkspace}
-            className="rounded border border-[#9A3412]/40 bg-white px-3 py-1.5 font-semibold text-[#9A3412] hover:bg-[#F5F1E8] whitespace-nowrap cursor-pointer"
+            disabled={true}
+            aria-disabled="true"
+            onClick={undefined}
+            title="Google Sign-In is currently disabled"
+            className="rounded border border-[#9A3412]/40 bg-white px-3 py-1.5 font-semibold text-[#9A3412] opacity-50 cursor-not-allowed whitespace-nowrap"
           >
             Authorize Google Workspace
           </button>

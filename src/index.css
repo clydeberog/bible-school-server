@@ -75,13 +75,14 @@
   vertical-align: top;
 }
 
-.gsi-material-button:hover {
+.gsi-material-button:hover:not(:disabled) {
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.18), 0 1px 3px 1px rgba(60, 64, 67, 0.1);
   background-color: #F8FAFC;
 }
 
 .gsi-material-button:disabled {
-  cursor: default;
+  cursor: not-allowed;
+  opacity: 0.55;
   background-color: #FFFFFF61;
   border-color: #1F1F1F1F;
 }

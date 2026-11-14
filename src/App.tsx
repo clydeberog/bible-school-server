@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User } from 'firebase/auth';
-import {
-  getAccessToken,
-  googleSignIn,
-  initAuth,
-  logout,
-  testFirestoreConnection,
-} from './lib/firebase';
+import { getAccessToken, testFirestoreConnection } from './lib/firebase';
 import {
   attachRecordingRecord,
   createCourse,
@@ -88,32 +82,6 @@ export default function App() {
 
   useEffect(() => {
     testFirestoreConnection();
-
-    const unsubscribeAuth = initAuth(async (user, token) => {
-      setFirebaseUser(user);
-      setAccessToken(token || getAccessToken());
-      if (user) {
-        try {
-          const profile = await ensureUserProfile(user);
-          setUserProfile(profile);
-          setPreviewRole(profile.role);
-        } catch (err) {
-          setAuthError(
-            err instanceof Error ? err.message : 'Unable to initialize user profile in Firestore.'
-          );
-        }
-      } else {
-        setUserProfile(null);
-        setLiveCourses([]);
-        setLiveSessions([]);
-        setLiveRecordings([]);
-        setLiveResources([]);
-        setLiveEnrollments([]);
-        setDirectoryUsers([]);
-      }
-    });
-
-    return () => unsubscribeAuth();
   }, []);
 
   // Attach Firestore real-time listeners once authenticated
@@ -169,33 +137,12 @@ export default function App() {
     }
   }, [activeTab, isWebdev]);
 
-  const handleGoogleSignIn = async () => {
-    setIsSigningIn(true);
-    setAuthError(null);
-    try {
-      const { user, accessToken: freshToken } = await googleSignIn();
-      setFirebaseUser(user);
-      setAccessToken(freshToken);
-      const profile = await ensureUserProfile(user);
-      setUserProfile(profile);
-      setPreviewRole(profile.role);
-    } catch (err) {
-      setAuthError(err instanceof Error ? err.message : 'Google Sign-In failed.');
-    } finally {
-      setIsSigningIn(false);
-    }
+  const handleGoogleSignIn = () => {
+    // Google Sign-In is disabled for now.
   };
 
-  const handleTopBarAuthAction = async () => {
-    if (isLiveAuth) {
-      await logout();
-      setAccessToken(null);
-      setUserProfile(null);
-      setFirebaseUser(null);
-      setPreviewRole('instructor');
-    } else {
-      await handleGoogleSignIn();
-    }
+  const handleTopBarAuthAction = () => {
+    // Google Sign-In is disabled for now.
   };
 
   const handleSeedCurriculum = async () => {
@@ -523,7 +470,7 @@ export default function App() {
                 ? usingLiveCourses
                   ? 'Live Curriculum Synced'
                   : 'Connected (Sample Curriculum Active)'
-                : 'Sign in with Google for live class scheduling'}
+                : 'Google Sign-In disabled · Local preview active'}
             </span>
           </div>
 

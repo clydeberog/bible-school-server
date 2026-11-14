@@ -130,7 +130,11 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             {!isLiveAuth ? (
-              <GoogleSignInButton onClick={onGoogleSignIn} label="Sign in with Google" />
+              <GoogleSignInButton
+                onClick={onGoogleSignIn}
+                disabled={true}
+                label="Sign in with Google"
+              />
             ) : (
               <button
                 type="button"
@@ -197,28 +201,24 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
           <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
             {courses.length}
           </p>
-          <p className="mt-1 text-xs text-[#57534E]">Published Fall Term</p>
         </div>
         <div>
           <p className="text-xs font-medium text-[#57534E]">Upcoming Meet Sessions</p>
           <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
             {upcomingCount}
           </p>
-          <p className="mt-1 text-xs text-[#57534E]">Google Calendar Synced</p>
         </div>
         <div>
           <p className="text-xs font-medium text-[#57534E]">Attached Recordings</p>
           <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
             {recordings.length}
           </p>
-          <p className="mt-1 text-xs text-[#57534E]">Asynchronous Playback</p>
         </div>
         <div>
           <p className="text-xs font-medium text-[#57534E]">Class Lessons</p>
           <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
             {resources.length}
           </p>
-          <p className="mt-1 text-xs text-[#57534E]">Structured Study Notes</p>
         </div>
       </section>
 

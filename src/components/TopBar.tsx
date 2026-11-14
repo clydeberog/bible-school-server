@@ -88,9 +88,11 @@ export const TopBar: React.FC<TopBarProps> = ({
         <div className="flex items-center shrink-0">
           <button
             type="button"
-            disabled={isSigningIn}
-            onClick={onAuthAction}
-            className="px-4 py-2 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#172D6B] rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1E3A8A]"
+            disabled={true}
+            aria-disabled="true"
+            title="Google Sign-In is currently disabled"
+            onClick={userDisplayName ? onAuthAction : undefined}
+            className="px-4 py-2 text-xs font-semibold text-white bg-[#1E3A8A] rounded-md transition-colors whitespace-nowrap shrink-0 cursor-not-allowed opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1E3A8A]"
           >
             {isSigningIn
               ? 'Connecting...'

@@ -14,8 +14,10 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      aria-disabled={disabled}
+      title={disabled ? 'Google Sign-In is currently disabled' : undefined}
       className="gsi-material-button"
     >
       <div className="gsi-material-button-state" />
