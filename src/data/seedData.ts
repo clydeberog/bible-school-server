@@ -20,7 +20,7 @@ export const DEMO_COURSES: Course[] = [
     title: 'Biblical Hermeneutics & Exegesis',
     description:
       'Foundational principles of grammatical-historical interpretation, genre analysis across narrative, poetry, and epistle, and responsible application for preaching and teaching.',
-    term: 'Fall 2026',
+    term: '1st Semester 2026–2027',
     credits: 3,
     instructorId: 'demo-instructor-1',
     instructorName: 'Francis',
@@ -33,7 +33,7 @@ export const DEMO_COURSES: Course[] = [
     title: 'Old Testament Survey: Torah & Prophets',
     description:
       'Redemptive-historical survey tracing covenant theology from Genesis through the Minor Prophets, examining ancient Near Eastern literary context and canonical unity.',
-    term: 'Fall 2026',
+    term: '1st Semester 2026–2027',
     credits: 3,
     instructorId: 'demo-instructor-1',
     instructorName: 'Francis',
@@ -46,7 +46,7 @@ export const DEMO_COURSES: Course[] = [
     title: 'New Testament Koine Greek Exegesis',
     description:
       'Intermediate syntax, verbal aspect, and discourse analysis applied directly to the Greek text of the Gospel of John and the Pauline Epistles.',
-    term: 'Fall 2026',
+    term: '1st Semester 2026–2027',
     credits: 4,
     instructorId: 'demo-instructor-2',
     instructorName: 'Francis',
@@ -170,7 +170,7 @@ export const DEMO_RESOURCES: CourseResource[] = [
     mimeType: 'application/pdf',
     sizeBytes: 1482000,
     storageProvider: 'gcs_presigned',
-    storageKey: 'bib-201-hermeneutics/BIB201_Syllabus_Fall2026.pdf',
+    storageKey: 'bib-201-hermeneutics/BIB201_Syllabus_1stSem_2026_2027.pdf',
     isPublished: true,
   },
   {

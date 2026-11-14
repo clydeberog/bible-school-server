@@ -63,12 +63,6 @@ async function startServer() {
     res.json({ ok: true, service: 'bible-school-lms', timestamp: new Date().toISOString() });
   });
 
-  app.get('/api/config/maps', (_req: Request, res: Response) => {
-    const apiKey =
-      process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '';
-    res.json({ apiKey });
-  });
-
   // ---------------------------------------------------------------------------
   // Google Workspace Proxy: Schedule Class (Meet v2 Space + Calendar v3 Event)
   // ---------------------------------------------------------------------------

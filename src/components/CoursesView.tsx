@@ -70,8 +70,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [term, setTerm] = useState('Fall 2026');
-  const [credits, setCredits] = useState(3);
+  const [term, setTerm] = useState('1st Semester 2026–2027');
   const [coverImageUrl, setCoverImageUrl] = useState<string>(COURSE_IMAGES.hermeneutics);
   const [creating, setCreating] = useState(false);
   const [enrollingId, setEnrollingId] = useState<string | null>(null);
@@ -84,7 +83,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
     if (!code.trim() || !title.trim() || description.trim().length < 10) return;
     setCreating(true);
     try {
-      await onCreateCourse({ code, title, description, term, credits, coverImageUrl });
+      await onCreateCourse({ code, title, description, term, credits: 3, coverImageUrl });
       setShowCreateModal(false);
       setCode('');
       setTitle('');
@@ -118,7 +117,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
         <div className="lg:col-span-7 flex flex-col justify-between py-2">
           <div>
             <p className="text-xs font-medium tracking-wide text-[#57534E]">
-              Fall 2026 Academic Term
+              1st Semester &middot; SY 2026&ndash;2027
             </p>
             <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
               Scriptural Study, Live Meet Seminars &amp; Class Lessons
@@ -240,10 +239,10 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-serif text-3xl font-semibold text-[#1E293B]">
-              01. Seminary Course Catalog
+              Seminary Courses
             </h2>
             <p className="mt-1 text-sm text-[#57534E]">
-              Select a course to access live Meet links, recorded lectures, syllabi, and assignments.
+              Select a course to access live Meet links, recorded lectures, syllabi, and class lessons.
             </p>
           </div>
           {canManageCourses && (
@@ -297,8 +296,6 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                       <span className="font-mono font-medium text-[#1E3A8A]">{course.code}</span>
                       <span aria-hidden="true">&middot;</span>
                       <span>{course.term}</span>
-                      <span aria-hidden="true">&middot;</span>
-                      <span className="tabular-nums">{course.credits} Credits</span>
                     </div>
 
                     <h3 className="mt-2 font-serif text-xl font-semibold leading-snug text-[#1E293B]">
@@ -613,10 +610,11 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#1E293B]">Term</label>
+                <label className="block text-xs font-semibold text-[#1E293B]">Semester</label>
                 <input
                   required
                   maxLength={40}
+                  placeholder="1st Semester 2026–2027"
                   value={term}
                   onChange={(e) => setTerm(e.target.value)}
                   className="mt-1 w-full rounded border border-[#E5DFD3] bg-white px-3 py-2 text-sm text-[#1E293B]"
@@ -636,30 +634,17 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-[#1E293B]">Credits</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={12}
-                  value={credits}
-                  onChange={(e) => setCredits(Number(e.target.value))}
-                  className="mt-1 w-full rounded border border-[#E5DFD3] bg-white px-3 py-2 text-sm text-[#1E293B]"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-[#1E293B]">Cover Illustration</label>
-                <select
-                  value={coverImageUrl}
-                  onChange={(e) => setCoverImageUrl(e.target.value)}
-                  className="mt-1 w-full rounded border border-[#E5DFD3] bg-white px-3 py-2 text-sm text-[#1E293B]"
-                >
-                  <option value={COURSE_IMAGES.hermeneutics}>Manuscript &amp; Dividers</option>
-                  <option value={COURSE_IMAGES.oldTestament}>Scroll &amp; Lamp</option>
-                  <option value={COURSE_IMAGES.ntGreek}>Greek Exegesis Desk</option>
-                </select>
-              </div>
+            <div>
+              <label className="block text-xs font-semibold text-[#1E293B]">Cover Illustration</label>
+              <select
+                value={coverImageUrl}
+                onChange={(e) => setCoverImageUrl(e.target.value)}
+                className="mt-1 w-full rounded border border-[#E5DFD3] bg-white px-3 py-2 text-sm text-[#1E293B]"
+              >
+                <option value={COURSE_IMAGES.hermeneutics}>Manuscript &amp; Dividers</option>
+                <option value={COURSE_IMAGES.oldTestament}>Scroll &amp; Lamp</option>
+                <option value={COURSE_IMAGES.ntGreek}>Greek Exegesis Desk</option>
+              </select>
             </div>
 
             <div>
