@@ -1,0 +1,455 @@
+{
+  "entities": {
+    "UserPublic": {
+      "title": "UserPublic",
+      "description": "Public directory profile for Bible School students, instructors, and administrators without PII.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Display name shown in courses and sessions"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["student", "instructor", "admin", "webdev"],
+          "description": "RBAC role enforced by Firestore Security Rules"
+        },
+        "department": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Academic department or track"
+        },
+        "bio": {
+          "type": "string",
+          "maxLength": 600,
+          "description": "Short academic biography"
+        },
+        "isPublicDirectory": {
+          "type": "boolean",
+          "description": "Whether profile appears in signed-in school directory"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp"
+        }
+      },
+      "required": ["uid", "displayName", "role", "department", "isPublicDirectory", "createdAt", "updatedAt"]
+    },
+    "UserPrivate": {
+      "title": "UserPrivate",
+      "description": "Isolated PII sub-document strictly accessible to the account owner or school admins.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "AdminGrant": {
+      "title": "AdminGrant",
+      "description": "Server-trusted admin privilege grant document.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "grantedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "grantedBy", "createdAt"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Bible School academic course offering.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24,
+          "description": "Course code such as BIB-201"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 140
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "term": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40
+        },
+        "credits": {
+          "type": "number"
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "published", "archived"]
+        },
+        "coverImageUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["code", "title", "description", "term", "credits", "instructorId", "instructorName", "status", "createdAt", "updatedAt"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Student-to-course enrollment link enabling RBAC checks and instructor roster views.",
+      "type": "object",
+      "properties": {
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studentName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed", "withdrawn"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["courseId", "studentId", "studentName", "instructorId", "status", "createdAt", "updatedAt"]
+    },
+    "ClassSession": {
+      "title": "ClassSession",
+      "description": "Scheduled live virtual Bible class backed by Google Calendar & Google Meet v2.",
+      "type": "object",
+      "properties": {
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "courseCode": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24
+        },
+        "courseTitle": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 140
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "moduleTitle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "scheduledStartIso": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 64
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
+        "meetUri": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "meetSpaceName": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "calendarEventId": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "status": {
+          "type": "string",
+          "enum": ["scheduled", "live", "completed", "archived"]
+        },
+        "recordingStatus": {
+          "type": "string",
+          "enum": ["pending", "processing", "attached"]
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["courseId", "courseCode", "courseTitle", "instructorId", "instructorName", "moduleTitle", "title", "scheduledStartIso", "durationMinutes", "status", "recordingStatus", "isPublished", "createdAt", "updatedAt"]
+    },
+    "ClassRecording": {
+      "title": "ClassRecording",
+      "description": "Captured Google Meet recording metadata retrieved via Meet conferenceRecords and Drive v3.",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 180
+        },
+        "driveFileId": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 200
+        },
+        "conferenceRecordId": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "playbackUrl": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 500
+        },
+        "durationSeconds": {
+          "type": "number"
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["sessionId", "courseId", "instructorId", "title", "driveFileId", "playbackUrl", "durationSeconds", "isPublished", "createdAt", "updatedAt"]
+    },
+    "CourseResource": {
+      "title": "CourseResource",
+      "description": "Protected instructional material (PDF commentary, lexicon, slides, multimedia) attached to a course module.",
+      "type": "object",
+      "properties": {
+        "courseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "instructorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "moduleTitle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 180
+        },
+        "lessonSummary": {
+          "type": "string",
+          "maxLength": 600
+        },
+        "fileName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "mimeType": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "sizeBytes": {
+          "type": "number"
+        },
+        "storageProvider": {
+          "type": "string",
+          "enum": ["gcs_presigned", "google_drive"]
+        },
+        "storageKey": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 300
+        },
+        "downloadUrl": {
+          "type": "string",
+          "maxLength": 600
+        },
+        "isPublished": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["courseId", "instructorId", "moduleTitle", "title", "fileName", "mimeType", "sizeBytes", "storageProvider", "storageKey", "isPublished", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPublic" },
+      "description": "Public directory user profiles with strict role immutability for non-admins."
+    },
+    "/users/{userId}/private/info": {
+      "schema": { "$ref": "#/entities/UserPrivate" },
+      "description": "Isolated user PII subcollection readable only by owner or admin."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminGrant" },
+      "description": "Trusted administrator access grants."
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/Course" },
+      "description": "Bible School courses."
+    },
+    "/enrollments/{enrollmentId}": {
+      "schema": { "$ref": "#/entities/Enrollment" },
+      "description": "Course enrollment mappings."
+    },
+    "/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/ClassSession" },
+      "description": "Scheduled virtual Google Meet class sessions."
+    },
+    "/recordings/{recordingId}": {
+      "schema": { "$ref": "#/entities/ClassRecording" },
+      "description": "Google Meet class recordings linked to sessions and courses."
+    },
+    "/resources/{resourceId}": {
+      "schema": { "$ref": "#/entities/CourseResource" },
+      "description": "Class lessons and protected instructional materials."
+    }
+  }
+}

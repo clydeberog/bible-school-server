@@ -1,0 +1,8 @@
+{
+  "name": "Bible School LMS",
+  "description": "Role-based Bible School Learning Management System with Google Meet virtual classes, automated recording retrieval, protected course resources, and an interactive Cloud Architecture Specification Workbench.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
