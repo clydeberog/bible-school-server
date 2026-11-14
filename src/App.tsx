@@ -437,6 +437,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#1E293B]">
+      {/* Ongoing Project Notice Banner above navigation menu */}
+      <div
+        role="note"
+        aria-label="Project status notice"
+        className="border-b border-[#B45309]/25 bg-[#FEF3C7] text-[#78350F]"
+      >
+        <div className="mx-auto flex max-w-[1200px] items-center justify-center px-4 sm:px-6 py-2 text-center text-xs sm:text-[13px] font-medium leading-snug">
+          <span>
+            This is an ongoing project, the details &amp; information inside are not yet final.
+          </span>
+        </div>
+      </div>
 
       <TopBar
         activeTab={activeTab}
@@ -447,55 +459,57 @@ export default function App() {
         isSigningIn={isSigningIn}
       />
 
-      {/* Workspace Mode & Role Toolbar */}
-      <div className="border-b border-[#E5DFD3] bg-[#F5F1E8]/70">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-6 py-2.5 text-xs">
-          <div className="flex flex-wrap items-center gap-2 text-[#57534E]">
-            <span className="font-semibold text-[#1E293B]">
-              {isLiveAuth
-                ? `${userProfile?.displayName} (${userProfile?.role.toUpperCase()})`
-                : 'Sandbox Preview Mode'}
-            </span>
-            <span aria-hidden="true">&middot;</span>
-            <span>
-              {isLiveAuth
-                ? usingLiveCourses
-                  ? 'Live Curriculum Synced'
-                  : 'Connected (Sample Curriculum Active)'
-                : 'Local preview active'}
-            </span>
-          </div>
-
-          {(!isLiveAuth || userProfile?.role === 'admin') && (
-            <div className="flex items-center gap-2">
-              <span className="text-[#57534E]">
-                {isLiveAuth ? 'Inspect View:' : 'Preview Role:'}
+      {/* Workspace Mode & Role Toolbar (School of Ministry only) */}
+      {activeTab === 'ministry' && (
+        <div className="border-b border-[#E5DFD3] bg-[#F5F1E8]/70">
+          <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-2.5 text-xs">
+            <div className="flex flex-wrap items-center gap-2 text-[#57534E]">
+              <span className="font-semibold text-[#1E293B]">
+                {isLiveAuth
+                  ? `${userProfile?.displayName} (${userProfile?.role.toUpperCase()})`
+                  : 'Sandbox Preview Mode'}
               </span>
-              <div className="inline-flex rounded border border-[#E5DFD3] bg-white p-0.5">
-                {(isLiveAuth
-                  ? (['student', 'instructor', 'admin', 'webdev'] as UserRole[])
-                  : (['student', 'instructor'] as UserRole[])
-                ).map((roleOption) => (
-                  <button
-                    key={roleOption}
-                    type="button"
-                    onClick={() => setPreviewRole(roleOption)}
-                    className={`rounded px-2.5 py-1 text-xs font-semibold capitalize transition-colors cursor-pointer ${
-                      effectiveRole === roleOption
-                        ? 'bg-[#1E3A8A] text-white'
-                        : 'text-[#57534E] hover:text-[#1E293B]'
-                    }`}
-                  >
-                    {roleOption}
-                  </button>
-                ))}
-              </div>
+              <span aria-hidden="true">&middot;</span>
+              <span>
+                {isLiveAuth
+                  ? usingLiveCourses
+                    ? 'Live Curriculum Synced'
+                    : 'Connected (Sample Curriculum Active)'
+                  : 'Local preview active'}
+              </span>
             </div>
-          )}
-        </div>
-      </div>
 
-      <main className="mx-auto w-full max-w-[1200px] flex-1 px-6 py-10">
+            {(!isLiveAuth || userProfile?.role === 'admin') && (
+              <div className="flex items-center gap-2">
+                <span className="text-[#57534E]">
+                  {isLiveAuth ? 'Inspect View:' : 'Preview Role:'}
+                </span>
+                <div className="inline-flex rounded border border-[#E5DFD3] bg-white p-0.5">
+                  {(isLiveAuth
+                    ? (['student', 'instructor', 'admin', 'webdev'] as UserRole[])
+                    : (['student', 'instructor'] as UserRole[])
+                  ).map((roleOption) => (
+                    <button
+                      key={roleOption}
+                      type="button"
+                      onClick={() => setPreviewRole(roleOption)}
+                      className={`rounded px-2.5 py-1.5 sm:py-1 text-xs font-semibold capitalize transition-colors cursor-pointer ${
+                        effectiveRole === roleOption
+                          ? 'bg-[#1E3A8A] text-white'
+                          : 'text-[#57534E] hover:text-[#1E293B]'
+                      }`}
+                    >
+                      {roleOption}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-6 sm:py-10">
         {authError && (
           <div className="mb-6 flex items-center justify-between rounded-md border border-[#9A3412]/30 bg-[#9A3412]/5 px-4 py-3 text-xs text-[#9A3412]">
             <span className="break-all">{authError}</span>
@@ -572,7 +586,7 @@ export default function App() {
       <VisitUsSection />
 
       <footer className="border-t border-[#E5DFD3] bg-[#F5F1E8]/60">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-5 text-xs text-[#57534E]">
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-4 sm:px-6 py-5 text-xs text-[#57534E]">
           <div className="flex items-center gap-2.5">
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"

@@ -126,13 +126,13 @@ export const ChurchOfMinistryView: React.FC<ChurchOfMinistryViewProps> = ({
           Back to Home
         </button>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div>
             <p className="text-xs font-medium tracking-wide text-[#57534E]">
-              New Life Fundamental Baptist Church &middot; School of Ministry
+              New Life Fundamental Baptist Church
             </p>
-            <h1 className="mt-1 font-serif text-4xl font-semibold tracking-tight text-[#1E293B]">
-              Church of Ministry
+            <h1 className="mt-1 font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-[#1E293B]">
+              School of Ministry
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#57534E]">
               Access seminary courses, scheduled virtual classes with recorded lectures, and class lessons &amp; study materials.
@@ -141,8 +141,8 @@ export const ChurchOfMinistryView: React.FC<ChurchOfMinistryViewProps> = ({
 
           <div
             role="tablist"
-            aria-label="Church of Ministry sections"
-            className="inline-flex items-center gap-1 rounded-lg border border-[#E5DFD3] bg-[#F5F1E8] p-1 self-start md:self-auto"
+            aria-label="School of Ministry sections"
+            className="flex w-full sm:w-auto sm:inline-flex items-center gap-1 rounded-lg border border-[#E5DFD3] bg-[#F5F1E8] p-1 overflow-x-auto self-start lg:self-auto"
           >
             {SECTION_TABS.map((tab) => {
               const Icon = tab.icon;
@@ -154,7 +154,7 @@ export const ChurchOfMinistryView: React.FC<ChurchOfMinistryViewProps> = ({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => onSelectSection(tab.id)}
-                  className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-md px-3 sm:px-4 py-2.5 sm:py-2 text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-[#1E3A8A] text-white shadow-xs'
                       : 'text-[#57534E] hover:text-[#1E293B]'

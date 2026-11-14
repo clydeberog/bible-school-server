@@ -123,7 +123,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                 <p className="text-xs font-medium tracking-wide text-[#57534E]">
                   1st Semester &middot; SY 2026&ndash;2027
                 </p>
-                <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
+                <h1 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
                   Virtual Class, Lessons &amp; Study Materials
                 </h1>
                 <p className="mt-4 text-base leading-relaxed text-[#57534E] max-w-xl">
@@ -198,7 +198,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
           </section>
 
           {/* Seminary Courses Discovery Callout (Replaces inline course grid on Home) */}
-          <section className="rounded-lg border border-[#E5DFD3] bg-white p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <section className="rounded-lg border border-[#E5DFD3] bg-white p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
                 School of Ministry
@@ -206,7 +206,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               <p className="mt-1 text-xs font-medium tracking-wide text-[#57534E]">
                 1st Semester &middot; SY 2026&ndash;2027 &middot; {courses.length} Active Courses
               </p>
-              <h2 className="mt-1.5 font-serif text-3xl font-semibold text-[#1E293B]">
+              <h2 className="mt-1.5 font-serif text-2xl sm:text-3xl font-semibold text-[#1E293B]">
                 Seminary Courses
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-[#57534E]">
@@ -214,11 +214,11 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               </p>
             </div>
 
-            <div className="shrink-0">
+            <div className="shrink-0 w-full md:w-auto">
               <button
                 type="button"
                 onClick={() => onNavigateTab('courses')}
-                className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               >
                 Discover Seminary Courses
                 <ArrowRight className="h-4 w-4" />
@@ -269,7 +269,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               )}
             </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => {
             const isEnrolled = enrollments.some((e) => e.courseId === course.id);
             const courseSessions = sessions.filter((s) => s.courseId === course.id);
@@ -611,7 +611,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-[#1E293B]">Course Code</label>
                 <input

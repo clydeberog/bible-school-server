@@ -13,7 +13,7 @@ interface TopBarProps {
 
 const BASE_NAV_ITEMS: Array<{ id: NavTab; label: string }> = [
   { id: 'home', label: 'Home' },
-  { id: 'ministry', label: 'Church of Ministry' },
+  { id: 'ministry', label: 'School of Ministry' },
 ];
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -31,13 +31,13 @@ export const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <header className="sticky top-0 z-30 border-b border-[#E5DFD3] bg-[#FBF9F5]/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-6 py-3.5">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2.5 sm:py-3.5">
         {/* Zone 1: Brand emblem + single-line wordmark */}
         <button
           type="button"
           onClick={() => onSelectTab('home')}
           title="New Life Fundamental Baptist Church"
-          className="flex items-center gap-3 min-w-0 shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A] rounded"
+          className="flex flex-1 md:flex-initial items-center gap-2.5 sm:gap-3 min-w-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A] rounded text-left"
         >
           {!logoFailed && (
             <img
@@ -45,10 +45,10 @@ export const TopBar: React.FC<TopBarProps> = ({
               alt="New Life Fundamental Baptist Church logo"
               referrerPolicy="no-referrer"
               onError={() => setLogoFailed(true)}
-              className="h-10 w-10 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
+              className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
             />
           )}
-          <span className="font-serif text-base sm:text-lg lg:text-xl font-semibold tracking-tight text-[#1E293B] truncate max-w-[200px] sm:max-w-[360px] lg:max-w-none">
+          <span className="font-serif text-sm sm:text-lg lg:text-xl font-semibold tracking-tight text-[#1E293B] truncate">
             New Life Fundamental Baptist Church
           </span>
         </button>
@@ -105,7 +105,7 @@ export const TopBar: React.FC<TopBarProps> = ({
       {/* Mobile navigation row */}
       <nav
         aria-label="Mobile Navigation"
-        className="flex md:hidden items-center justify-between gap-2 border-t border-[#E5DFD3] px-4 py-2 overflow-x-auto"
+        className="flex md:hidden items-center gap-2 border-t border-[#E5DFD3] px-4 py-1.5 overflow-x-auto"
       >
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
@@ -114,7 +114,7 @@ export const TopBar: React.FC<TopBarProps> = ({
               key={item.id}
               type="button"
               onClick={() => onSelectTab(item.id)}
-              className={`px-2.5 py-1.5 text-xs font-medium rounded whitespace-nowrap shrink-0 ${
+              className={`min-h-[38px] px-3 py-1.5 text-xs font-semibold rounded whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                 isActive
                   ? 'bg-[#1E3A8A] text-white'
                   : 'text-[#57534E] hover:text-[#1E293B]'

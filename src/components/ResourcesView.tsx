@@ -131,7 +131,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
           aria-label="Filter class lessons by course"
           value={filterCourseId}
           onChange={(e) => setFilterCourseId(e.target.value)}
-          className="rounded-md border border-[#E5DFD3] bg-white px-3 py-2 text-xs font-medium text-[#1E293B] focus:border-[#1E3A8A] focus:outline-none"
+          className="w-full sm:w-auto max-w-full rounded-md border border-[#E5DFD3] bg-white px-3 py-2.5 sm:py-2 text-xs font-medium text-[#1E293B] focus:border-[#1E3A8A] focus:outline-none"
         >
           <option value="all">All Courses</option>
           {courses.map((c) => (
@@ -187,9 +187,9 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
                     key={lesson.id}
                     className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5"
                   >
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-start gap-3 min-w-0">
                       <FileText className="mt-1 h-4 w-4 shrink-0 text-[#1E3A8A]" />
-                      <div className="space-y-1">
+                      <div className="space-y-1 min-w-0">
                         <p className="text-xs text-[#57534E]">
                           <span className="font-mono font-semibold text-[#1E3A8A]">
                             {course?.code || lesson.courseId}
@@ -204,7 +204,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
                             {lesson.lessonSummary}
                           </p>
                         )}
-                        <p className="text-xs font-mono text-[#57534E] tabular-nums">
+                        <p className="text-xs font-mono text-[#57534E] tabular-nums break-all">
                           {lesson.fileName} &middot; {formatBytes(lesson.sizeBytes)}
                         </p>
                       </div>
