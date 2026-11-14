@@ -584,7 +584,14 @@ async function startServer() {
   } else {
     app.use((req, res, next) => {
       if (req.path.startsWith('/src/') || req.path === '/' || req.path.endsWith('.css')) {
-        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+        const origSetHeader = res.setHeader.bind(res);
+        res.setHeader = ((name: string, value: number | string | readonly string[]) => {
+          if (name.toLowerCase() === 'cache-control') {
+            return origSetHeader(name, 'no-store, no-cache, must-revalidate');
+          }
+          return origSetHeader(name, value);
+        }) as typeof res.setHeader;
+        origSetHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
       }
       next();
     });

@@ -116,13 +116,13 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
     <div className="space-y-10 sm:space-y-14">
       {mode === 'home' && (
         <>
-          {/* New Top Welcome Banner for Visitors & Members */}
+          {/* Welcome Banner for Visitors & Members */}
           <section
             aria-labelledby="welcome-banner-heading"
-            className="rounded-xl border border-[#E5DFD3] bg-[#F5F1E8]/70 p-6 sm:p-10"
+            className="rounded-xl border border-[#E5DFD3] bg-[#F5F1E8]/70 p-5 sm:p-8 lg:p-10"
           >
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-              <div className="flex-1 min-w-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+              <div className="lg:col-span-7 min-w-0">
                 <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
                   New Life Fundamental Baptist Church &middot; Leyte, Philippines
                 </p>
@@ -132,17 +132,17 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                 >
                   Welcome Visitors &amp; Church Members
                 </h1>
-                <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#57534E] max-w-2xl">
+                <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-[#57534E] max-w-xl">
                   Whether you are visiting for the first time or gathering with our church family, we warmly welcome you to New Life Fundamental Baptist Church. Join us for worship, fellowship in God&rsquo;s Word, and equipping for ministry.
                 </p>
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={() => onNavigateTab('courses')}
-                    className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                    className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     Explore School of Ministry
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                   <button
                     type="button"
@@ -151,22 +151,26 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                         .getElementById('church-news-heading')
                         ?.scrollIntoView({ behavior: 'smooth' })
                     }
-                    className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-white px-4 py-2.5 text-xs sm:text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                    className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-white px-4 py-2 text-xs sm:text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     Church News &amp; Activities
                   </button>
                 </div>
               </div>
 
-              <div className="w-full lg:w-[360px] shrink-0">
+              <div className="lg:col-span-5 min-w-0">
                 <div className="rounded-lg border border-[#E5DFD3] bg-white p-5 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <img
-                      src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-                      alt="New Life Fundamental Baptist Church logo"
-                      referrerPolicy="no-referrer"
-                      className="h-12 w-12 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
-                    />
+                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[#E5DFD3] bg-white p-0.5">
+                      <img
+                        src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
+                        alt="New Life Fundamental Baptist Church logo"
+                        width={40}
+                        height={40}
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
                     <div className="min-w-0">
                       <p className="font-serif text-lg font-semibold text-[#1E293B] leading-snug">
                         Worship &amp; Fellowship

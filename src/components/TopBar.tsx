@@ -36,20 +36,20 @@ export const TopBar: React.FC<TopBarProps> = ({
         <button
           type="button"
           onClick={() => onSelectTab('home')}
-          title="New Life Fundamental Baptist Church"
+          title="New Life Fundamental Baptist Church - Leyte, Leyte"
           className="flex flex-1 md:flex-initial items-center gap-2.5 sm:gap-3 min-w-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A] rounded text-left"
         >
           {!logoFailed && (
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-              alt="New Life Fundamental Baptist Church logo"
+              alt="New Life Fundamental Baptist Church - Leyte, Leyte logo"
               referrerPolicy="no-referrer"
               onError={() => setLogoFailed(true)}
               className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
             />
           )}
           <span className="font-serif text-sm sm:text-lg lg:text-xl font-semibold tracking-tight text-[#1E293B] truncate">
-            New Life Fundamental Baptist Church
+            New Life Fundamental Baptist Church - Leyte, Leyte
           </span>
         </button>
 

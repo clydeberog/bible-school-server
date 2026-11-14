@@ -47,8 +47,10 @@ import { ChurchOfMinistryView, MinistrySection } from './components/ChurchOfMini
 import { ArchitectureWorkbench } from './components/ArchitectureWorkbench';
 import { ChurchNewsSection } from './components/ChurchNewsSection';
 import { VisitUsSection } from './components/VisitUsSection';
+import { ProjectNoticeModal } from './components/ProjectNoticeModal';
 
 export default function App() {
+  const [showProjectNotice, setShowProjectNotice] = useState(true);
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [ministrySection, setMinistrySection] = useState<MinistrySection>('courses');
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
@@ -437,6 +439,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#1E293B]">
+      <ProjectNoticeModal
+        isOpen={showProjectNotice}
+        onContinue={() => setShowProjectNotice(false)}
+      />
+
       {/* Ongoing Project Notice Banner above navigation menu */}
       <div
         role="note"
@@ -590,12 +597,12 @@ export default function App() {
           <div className="flex items-center gap-2.5">
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-              alt="New Life Fundamental Baptist Church logo"
+              alt="New Life Fundamental Baptist Church - Leyte, Leyte logo"
               referrerPolicy="no-referrer"
               className="h-7 w-7 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
             />
             <span>
-              &copy; {new Date().getFullYear()} New Life Fundamental Baptist Church. All rights reserved.
+              &copy; {new Date().getFullYear()} New Life Fundamental Baptist Church - Leyte, Leyte. All rights reserved.
             </span>
           </div>
           {isWebdev && (
