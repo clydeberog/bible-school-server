@@ -524,7 +524,7 @@ export default function App() {
         )}
 
         {activeTab === 'home' && (
-          <>
+          <div className="space-y-12 sm:space-y-16">
             <CoursesView
               mode="home"
               courses={courses}
@@ -543,7 +543,7 @@ export default function App() {
             />
 
             <ChurchNewsSection />
-          </>
+          </div>
         )}
 
         {activeTab === 'ministry' && (

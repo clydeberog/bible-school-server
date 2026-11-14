@@ -113,19 +113,94 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
   };
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-10 sm:space-y-14">
       {mode === 'home' && (
         <>
-          {/* Editorial 2-Column Hero */}
+          {/* New Top Welcome Banner for Visitors & Members */}
+          <section
+            aria-labelledby="welcome-banner-heading"
+            className="rounded-xl border border-[#E5DFD3] bg-[#F5F1E8]/70 p-6 sm:p-10"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8">
+                <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
+                  New Life Fundamental Baptist Church &middot; Leyte, Philippines
+                </p>
+                <h1
+                  id="welcome-banner-heading"
+                  className="mt-2 font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl"
+                >
+                  Welcome Visitors &amp; Church Members
+                </h1>
+                <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#57534E] max-w-2xl">
+                  Whether you are visiting for the first time or gathering with our church family, we warmly welcome you to New Life Fundamental Baptist Church. Join us for worship, fellowship in God&rsquo;s Word, and equipping for ministry.
+                </p>
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('courses')}
+                    className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Explore School of Ministry
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      document
+                        .getElementById('church-news-heading')
+                        ?.scrollIntoView({ behavior: 'smooth' })
+                    }
+                    className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-white px-4 py-2.5 text-xs sm:text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Church News &amp; Activities
+                  </button>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4">
+                <div className="rounded-lg border border-[#E5DFD3] bg-white p-5 sm:p-6">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
+                      alt="New Life Fundamental Baptist Church logo"
+                      referrerPolicy="no-referrer"
+                      className="h-12 w-12 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
+                    />
+                    <div>
+                      <p className="font-serif text-lg font-semibold text-[#1E293B] leading-snug">
+                        Worship &amp; Fellowship
+                      </p>
+                      <p className="text-xs text-[#57534E]">
+                        217 Amparo St. Poblacion, Leyte
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-4 border-t border-[#E5DFD3] pt-4 space-y-2 text-xs text-[#57534E]">
+                    <p>
+                      <span className="font-semibold text-[#1E293B]">Sunday Worship:</span>{' '}
+                      Congregational worship, preaching &amp; Sunday School
+                    </p>
+                    <p>
+                      <span className="font-semibold text-[#1E293B]">Midweek Prayer:</span>{' '}
+                      Wednesday Bible study &amp; corporate prayer
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Moved Below: Virtual Class, Lessons & Study Materials Hero Split */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border-b border-[#E5DFD3] pb-10">
             <div className="lg:col-span-7 flex flex-col justify-between py-2">
               <div>
                 <p className="text-xs font-medium tracking-wide text-[#57534E]">
                   1st Semester &middot; SY 2026&ndash;2027
                 </p>
-                <h1 className="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
+                <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-[#1E293B] max-w-2xl">
                   Virtual Class, Lessons &amp; Study Materials
-                </h1>
+                </h2>
                 <p className="mt-4 text-base leading-relaxed text-[#57534E] max-w-xl">
                   Attend live Google Meet lectures, revisit automatically captured class recordings, and access class lessons and study materials for every module.
                 </p>
@@ -198,7 +273,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
           </section>
 
           {/* Seminary Courses Discovery Callout (Replaces inline course grid on Home) */}
-          <section className="rounded-lg border border-[#E5DFD3] bg-white p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <section className="rounded-lg border border-[#E5DFD3] bg-white p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
                 School of Ministry
@@ -214,14 +289,14 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               </p>
             </div>
 
-            <div className="shrink-0 w-full md:w-auto">
+            <div className="shrink-0">
               <button
                 type="button"
                 onClick={() => onNavigateTab('courses')}
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               >
                 Discover Seminary Courses
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 w-3.5" />
               </button>
             </div>
           </section>
@@ -260,8 +335,11 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               {canManageCourses && (
                 <button
                   type="button"
-                  onClick={() => setShowCreateModal(true)}
-                  className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  disabled={true}
+                  aria-disabled="true"
+                  title="Creating new courses is currently disabled"
+                  onClick={undefined}
+                  className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs font-semibold text-white opacity-50 cursor-not-allowed whitespace-nowrap shrink-0"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   New Course
@@ -443,21 +521,24 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
 
                           <div className="flex items-center gap-2">
                             {sess.meetUri && sess.status !== 'completed' && (
-                              <a
-                                href={sess.meetUri}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-1.5 rounded-md bg-[#1E3A8A] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#172D6B] whitespace-nowrap"
+                              <button
+                                type="button"
+                                disabled={true}
+                                aria-disabled="true"
+                                title="Joining Google Meet is currently disabled"
+                                className="inline-flex items-center gap-1.5 rounded-md bg-[#1E3A8A] px-3 py-1.5 text-xs font-semibold text-white opacity-50 cursor-not-allowed whitespace-nowrap"
                               >
                                 <Video className="h-3.5 w-3.5" />
                                 Join Google Meet
-                              </a>
+                              </button>
                             )}
                             {rec && (
                               <button
                                 type="button"
-                                onClick={() => setActiveRecording(rec)}
-                                className="inline-flex items-center gap-1.5 rounded-md border border-[#14532D]/30 bg-[#14532D]/5 px-3 py-1.5 text-xs font-semibold text-[#14532D] hover:bg-[#14532D]/10 whitespace-nowrap cursor-pointer"
+                                disabled={true}
+                                aria-disabled="true"
+                                title="Watching recordings is currently disabled"
+                                className="inline-flex items-center gap-1.5 rounded-md border border-[#14532D]/30 bg-[#14532D]/5 px-3 py-1.5 text-xs font-semibold text-[#14532D] opacity-50 cursor-not-allowed whitespace-nowrap"
                               >
                                 <Play className="h-3.5 w-3.5" />
                                 Watch Recording
@@ -519,8 +600,11 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
                         </div>
                         <button
                           type="button"
-                          onClick={() => onDownloadResource(res)}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-[#E5DFD3] bg-[#FBF9F5] px-3 py-1.5 text-xs font-semibold text-[#1E293B] hover:bg-[#EBE6DF] whitespace-nowrap cursor-pointer"
+                          disabled={true}
+                          aria-disabled="true"
+                          title="Downloading lessons is currently disabled"
+                          onClick={undefined}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-[#E5DFD3] bg-[#FBF9F5] px-3 py-1.5 text-xs font-semibold text-[#1E293B] opacity-50 cursor-not-allowed whitespace-nowrap"
                         >
                           <Download className="h-3.5 w-3.5" />
                           Download Lesson

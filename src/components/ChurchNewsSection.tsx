@@ -44,7 +44,7 @@ export const ChurchNewsSection: React.FC = () => {
   return (
     <section
       aria-labelledby="church-news-heading"
-      className="mt-12 border-t border-[#E5DFD3] pt-10"
+      className="border-t border-[#E5DFD3] pt-10 sm:pt-12"
     >
       <div>
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[#E5DFD3] pb-6">

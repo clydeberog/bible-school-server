@@ -215,11 +215,11 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
           {canSchedule && (
             <button
               type="button"
-              onClick={() => {
-                if (!courseId && courses[0]) setCourseId(courses[0].id);
-                setShowScheduleModal(true);
-              }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2.5 sm:py-2 text-xs font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              disabled={true}
+              aria-disabled="true"
+              title="Scheduling Google Meet classes is currently disabled"
+              onClick={undefined}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2.5 sm:py-2 text-xs font-semibold text-white opacity-50 cursor-not-allowed whitespace-nowrap shrink-0"
             >
               <Plus className="h-3.5 w-3.5" />
               Schedule Google Meet Class
@@ -348,36 +348,41 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
 
                 <div className="flex flex-wrap items-center gap-2 shrink-0">
                   {sess.meetUri && (
-                    <a
-                      href={sess.meetUri}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-md bg-[#1E3A8A] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap"
+                    <button
+                      type="button"
+                      disabled={true}
+                      aria-disabled="true"
+                      title="Joining Meet is currently disabled"
+                      className="inline-flex items-center gap-1.5 rounded-md bg-[#1E3A8A] px-3.5 py-2 text-xs font-semibold text-white opacity-50 cursor-not-allowed whitespace-nowrap"
                     >
                       <Video className="h-3.5 w-3.5" />
                       Join Meet
                       <ExternalLink className="h-3 w-3" />
-                    </a>
+                    </button>
                   )}
 
                   {attachedRec && (
-                    <a
-                      href={attachedRec.playbackUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-md border border-[#14532D]/30 bg-[#14532D]/5 px-3.5 py-2 text-xs font-semibold text-[#14532D] hover:bg-[#14532D]/10 whitespace-nowrap"
+                    <button
+                      type="button"
+                      disabled={true}
+                      aria-disabled="true"
+                      title="Watching recordings is currently disabled"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-[#14532D]/30 bg-[#14532D]/5 px-3.5 py-2 text-xs font-semibold text-[#14532D] opacity-50 cursor-not-allowed whitespace-nowrap"
                     >
                       <Play className="h-3.5 w-3.5" />
                       Watch Recording
-                    </a>
+                    </button>
                   )}
 
                   {canSchedule && (
                     <>
                       <button
                         type="button"
-                        onClick={() => handleOpenSync(sess)}
-                        className="inline-flex items-center gap-1.5 rounded-md border border-[#E5DFD3] bg-[#FBF9F5] px-3 py-2 text-xs font-semibold text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap cursor-pointer"
+                        disabled={true}
+                        aria-disabled="true"
+                        title="Syncing recordings is currently disabled"
+                        onClick={undefined}
+                        className="inline-flex items-center gap-1.5 rounded-md border border-[#E5DFD3] bg-[#FBF9F5] px-3 py-2 text-xs font-semibold text-[#1E293B] opacity-50 cursor-not-allowed whitespace-nowrap"
                       >
                         <RefreshCw className="h-3.5 w-3.5" />
                         Sync Recording
@@ -385,9 +390,12 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
 
                       <button
                         type="button"
-                        onClick={() => setSessionToDelete(sess)}
+                        disabled={true}
+                        aria-disabled="true"
+                        title="Deleting sessions is currently disabled"
+                        onClick={undefined}
                         aria-label={`Delete ${sess.title}`}
-                        className="inline-flex items-center justify-center rounded-md border border-[#E5DFD3] bg-white p-2 text-[#9A3412] hover:bg-[#9A3412]/10 transition-colors cursor-pointer"
+                        className="inline-flex items-center justify-center rounded-md border border-[#E5DFD3] bg-white p-2 text-[#9A3412] opacity-50 cursor-not-allowed"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
