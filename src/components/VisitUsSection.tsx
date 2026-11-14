@@ -14,7 +14,7 @@ export function VisitUsSection() {
           <div className="flex items-center gap-3.5">
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-              alt="New Life Fundamental Baptist Church - School of Ministry logo"
+              alt="New Life Fundamental Baptist Church logo"
               referrerPolicy="no-referrer"
               className="h-14 w-14 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-1 shadow-xs"
             />

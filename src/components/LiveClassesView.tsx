@@ -24,6 +24,7 @@ interface LiveClassesViewProps {
   courses: Course[];
   sessions: ClassSession[];
   recordings: ClassRecording[];
+  resourcesCount: number;
   effectiveRole: UserRole;
   isLiveAuth: boolean;
   hasWorkspaceToken: boolean;
@@ -48,6 +49,7 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
   courses,
   sessions,
   recordings,
+  resourcesCount,
   effectiveRole,
   isLiveAuth,
   hasWorkspaceToken,
@@ -58,6 +60,7 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
   onDeleteSession,
 }) => {
   const canSchedule = effectiveRole === 'instructor' || effectiveRole === 'admin';
+  const upcomingCount = sessions.filter((s) => s.status === 'scheduled' || s.status === 'live').length;
   const [filterCourseId, setFilterCourseId] = useState<string>('all');
   const [showScheduleModal, setShowScheduleModal] = useState(false);
 
@@ -224,6 +227,34 @@ export const LiveClassesView: React.FC<LiveClassesViewProps> = ({
           )}
         </div>
       </div>
+
+      {/* 4-Column Operational Summary Strip */}
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6 border-b border-[#E5DFD3] pb-8">
+        <div>
+          <p className="text-xs font-medium text-[#57534E]">Active Courses</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
+            {courses.length}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs font-medium text-[#57534E]">Upcoming Meet Sessions</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
+            {upcomingCount}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs font-medium text-[#57534E]">Attached Recordings</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
+            {recordings.length}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs font-medium text-[#57534E]">Class Lessons</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
+            {resourcesCount}
+          </p>
+        </div>
+      </section>
 
       {isLiveAuth && !hasWorkspaceToken && canSchedule && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-[#9A3412]/30 bg-[#9A3412]/5 px-4 py-3 text-xs text-[#9A3412]">

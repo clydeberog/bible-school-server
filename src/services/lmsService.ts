@@ -70,7 +70,7 @@ export async function ensureUserProfile(user: User): Promise<UserProfile> {
       ),
       role: isBootstrapAdmin ? 'admin' : 'student',
       department: isBootstrapAdmin ? 'Academic Administration' : 'Biblical Studies',
-      bio: 'New Life Fundamental Baptist Church - School of Ministry Member',
+      bio: 'New Life Fundamental Baptist Church Member',
       isPublicDirectory: true,
     };
 

@@ -91,7 +91,7 @@ export const ArchitectureWorkbench: React.FC = () => {
           Principal Cloud Architect &amp; Full-Stack System Design Specification
         </p>
         <h2 className="mt-1 font-serif text-3xl font-semibold text-[#1E293B]">
-          New Life Fundamental Baptist Church - School of Ministry — Technical Architecture Blueprint
+          New Life Fundamental Baptist Church — Technical Architecture Blueprint
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[#57534E]">
           Comprehensive architectural specification covering the recommended stack, individual instructor Google OAuth 2.0 &amp; Meet recording sync flows, Firestore + PostgreSQL schemas, presigned Cloud Storage security, and quota resilience.

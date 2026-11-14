@@ -42,15 +42,15 @@ import {
   UserRole,
 } from './types/lms';
 import { NavTab, TopBar } from './components/TopBar';
-import { CoursesView } from './components/CoursesView';
-import { LiveClassesView } from './components/LiveClassesView';
-import { ResourcesView } from './components/ResourcesView';
+import { CourseNavTarget, CoursesView } from './components/CoursesView';
+import { ChurchOfMinistryView, MinistrySection } from './components/ChurchOfMinistryView';
 import { ArchitectureWorkbench } from './components/ArchitectureWorkbench';
-import { AdminPanel } from './components/AdminPanel';
+import { ChurchNewsSection } from './components/ChurchNewsSection';
 import { VisitUsSection } from './components/VisitUsSection';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<NavTab>('courses');
+  const [activeTab, setActiveTab] = useState<NavTab>('home');
+  const [ministrySection, setMinistrySection] = useState<MinistrySection>('courses');
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -126,9 +126,24 @@ export default function App() {
   // Ensure Architecture tab is strictly accessible to the webdev role only
   useEffect(() => {
     if (activeTab === 'architecture' && !isWebdev) {
-      setActiveTab('courses');
+      setActiveTab('home');
     }
   }, [activeTab, isWebdev]);
+
+  const handleSelectTab = (tab: NavTab) => {
+    setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateTarget = (target: CourseNavTarget) => {
+    if (target === 'home' || target === 'architecture') {
+      setActiveTab(target);
+    } else {
+      setMinistrySection(target);
+      setActiveTab('ministry');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleGoogleSignIn = () => {
     // Google Sign-In is disabled for now.
@@ -425,7 +440,7 @@ export default function App() {
 
       <TopBar
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleSelectTab}
         showArchitecture={isWebdev}
         userDisplayName={userProfile?.displayName || null}
         onAuthAction={handleTopBarAuthAction}
@@ -447,7 +462,7 @@ export default function App() {
                 ? usingLiveCourses
                   ? 'Live Curriculum Synced'
                   : 'Connected (Sample Curriculum Active)'
-                : 'Google Sign-In disabled · Local preview active'}
+                : 'Local preview active'}
             </span>
           </div>
 
@@ -494,9 +509,10 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'courses' && (
+        {activeTab === 'home' && (
           <>
             <CoursesView
+              mode="home"
               courses={courses}
               sessions={sessions}
               recordings={recordings}
@@ -509,46 +525,44 @@ export default function App() {
               onEnrollCourse={handleEnrollCourse}
               onCreateCourse={handleCreateCourse}
               onDownloadResource={handleDownloadResource}
-              onNavigateTab={setActiveTab}
+              onNavigateTab={handleNavigateTarget}
             />
 
-            {effectiveRole === 'admin' && (
-              <AdminPanel
-                isLiveAuth={isLiveAuth}
-                currentProfile={userProfile}
-                directoryUsers={directoryUsers}
-                onSeedCurriculum={handleSeedCurriculum}
-                onUpdateRole={updateUserRole}
-              />
-            )}
+            <ChurchNewsSection />
           </>
         )}
 
-        {activeTab === 'classes' && (
-          <LiveClassesView
+        {activeTab === 'ministry' && (
+          <ChurchOfMinistryView
+            activeSection={ministrySection}
+            onSelectSection={(sec) => {
+              setMinistrySection(sec);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onBackHome={() => handleSelectTab('home')}
+            onNavigateTarget={handleNavigateTarget}
             courses={courses}
             sessions={sessions}
             recordings={recordings}
+            resources={resources}
+            enrollments={enrollments}
             effectiveRole={effectiveRole}
             isLiveAuth={isLiveAuth}
             hasWorkspaceToken={Boolean(accessToken)}
-            onReconnectWorkspace={handleGoogleSignIn}
+            userProfile={userProfile}
+            directoryUsers={directoryUsers}
+            onGoogleSignIn={handleGoogleSignIn}
+            onEnrollCourse={handleEnrollCourse}
+            onCreateCourse={handleCreateCourse}
+            onDownloadResource={handleDownloadResource}
             onScheduleMeetClass={handleScheduleMeetClass}
             onSyncRecordings={handleSyncRecordings}
             onAttachRecording={handleAttachRecording}
             onDeleteSession={handleDeleteSession}
-          />
-        )}
-
-        {activeTab === 'resources' && (
-          <ResourcesView
-            courses={courses}
-            resources={resources}
-            effectiveRole={effectiveRole}
-            hasWorkspaceToken={Boolean(accessToken)}
             onUploadResource={handleUploadResource}
-            onDownloadResource={handleDownloadResource}
             onDeleteResource={handleDeleteResource}
+            onSeedCurriculum={handleSeedCurriculum}
+            onUpdateRole={updateUserRole}
           />
         )}
 
@@ -562,12 +576,12 @@ export default function App() {
           <div className="flex items-center gap-2.5">
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-              alt="New Life Fundamental Baptist Church - School of Ministry logo"
+              alt="New Life Fundamental Baptist Church logo"
               referrerPolicy="no-referrer"
               className="h-7 w-7 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
             />
             <span>
-              &copy; {new Date().getFullYear()} New Life Fundamental Baptist Church - School of Ministry. All rights reserved.
+              &copy; {new Date().getFullYear()} New Life Fundamental Baptist Church. All rights reserved.
             </span>
           </div>
           {isWebdev && (

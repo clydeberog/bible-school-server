@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type NavTab = 'courses' | 'classes' | 'resources' | 'architecture';
+export type NavTab = 'home' | 'ministry' | 'architecture';
 
 interface TopBarProps {
   activeTab: NavTab;
@@ -12,9 +12,8 @@ interface TopBarProps {
 }
 
 const BASE_NAV_ITEMS: Array<{ id: NavTab; label: string }> = [
-  { id: 'courses', label: 'Courses' },
-  { id: 'classes', label: 'Live Classes' },
-  { id: 'resources', label: 'Resources' },
+  { id: 'home', label: 'Home' },
+  { id: 'ministry', label: 'Church of Ministry' },
 ];
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -36,21 +35,21 @@ export const TopBar: React.FC<TopBarProps> = ({
         {/* Zone 1: Brand emblem + single-line wordmark */}
         <button
           type="button"
-          onClick={() => onSelectTab('courses')}
-          title="New Life Fundamental Baptist Church - School of Ministry"
+          onClick={() => onSelectTab('home')}
+          title="New Life Fundamental Baptist Church"
           className="flex items-center gap-3 min-w-0 shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A] rounded"
         >
           {!logoFailed && (
             <img
               src="/assets/aistudio/4a52c352-b439-44b9-9ab2-e11bf7c67dfe_57428442.jpg"
-              alt="New Life Fundamental Baptist Church - School of Ministry logo"
+              alt="New Life Fundamental Baptist Church logo"
               referrerPolicy="no-referrer"
               onError={() => setLogoFailed(true)}
               className="h-10 w-10 shrink-0 rounded-full border border-[#E5DFD3] bg-white object-contain p-0.5"
             />
           )}
-          <span className="font-serif text-base sm:text-lg lg:text-xl font-semibold tracking-tight text-[#1E293B] truncate max-w-[180px] sm:max-w-[340px] lg:max-w-none">
-            New Life Fundamental Baptist Church - School of Ministry
+          <span className="font-serif text-base sm:text-lg lg:text-xl font-semibold tracking-tight text-[#1E293B] truncate max-w-[200px] sm:max-w-[360px] lg:max-w-none">
+            New Life Fundamental Baptist Church
           </span>
         </button>
 

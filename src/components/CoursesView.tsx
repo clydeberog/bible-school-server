@@ -22,7 +22,10 @@ import {
 import { COURSE_IMAGES, HERO_IMAGE_PATH } from '../data/seedData';
 import { GoogleSignInButton } from './GoogleSignInButton';
 
+export type CourseNavTarget = 'home' | 'courses' | 'classes' | 'resources' | 'architecture';
+
 interface CoursesViewProps {
+  mode: 'home' | 'catalog';
   courses: Course[];
   sessions: ClassSession[];
   recordings: ClassRecording[];
@@ -42,10 +45,11 @@ interface CoursesViewProps {
     coverImageUrl: string;
   }) => Promise<void>;
   onDownloadResource: (resource: CourseResource) => Promise<void>;
-  onNavigateTab: (tab: 'classes' | 'resources' | 'architecture') => void;
+  onNavigateTab: (tab: CourseNavTarget) => void;
 }
 
 export const CoursesView: React.FC<CoursesViewProps> = ({
+  mode,
   courses,
   sessions,
   recordings,
@@ -108,154 +112,162 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
     }
   };
 
-  const upcomingCount = sessions.filter((s) => s.status === 'scheduled' || s.status === 'live').length;
-
   return (
     <div className="space-y-12">
-      {/* Editorial 2-Column Hero */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border-b border-[#E5DFD3] pb-10">
-        <div className="lg:col-span-7 flex flex-col justify-between py-2">
-          <div>
-            <p className="text-xs font-medium tracking-wide text-[#57534E]">
-              1st Semester &middot; SY 2026&ndash;2027
-            </p>
-            <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
-              Scriptural Study, Live Meet Seminars &amp; Class Lessons
-            </h1>
-            <p className="mt-4 text-base leading-relaxed text-[#57534E] max-w-xl">
-              Attend live Google Meet lectures, revisit automatically captured class recordings, and access structured class lessons and study materials for every module.
-            </p>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            {!isLiveAuth ? (
-              <GoogleSignInButton
-                onClick={onGoogleSignIn}
-                disabled={true}
-                label="Sign in with Google"
-              />
-            ) : (
-              <button
-                type="button"
-                onClick={() => onNavigateTab('classes')}
-                className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-              >
-                Open Live Classes
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            )}
-
-            {effectiveRole === 'webdev' ? (
-              <button
-                type="button"
-                onClick={() => onNavigateTab('architecture')}
-                className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-[#F5F1E8] px-4 py-2.5 text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-              >
-                Inspect Architecture Spec
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => onNavigateTab('resources')}
-                className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-[#F5F1E8] px-4 py-2.5 text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-              >
-                Browse Class Lessons
-              </button>
-            )}
-          </div>
-
-          {isLiveAuth && !hasWorkspaceToken && (
-            <p className="mt-4 text-xs text-[#9A3412]">
-              Google Workspace OAuth token is not active in memory yet. Click Sign out and Sign in again when scheduling Meet sessions or syncing Drive recordings.
-            </p>
-          )}
-        </div>
-
-        <div className="lg:col-span-5">
-          <div className="relative h-64 lg:h-full min-h-[260px] overflow-hidden rounded-lg border border-[#E5DFD3] bg-[#F5F1E8]">
-            {!heroImgFailed ? (
-              <img
-                src={HERO_IMAGE_PATH}
-                alt="Open study Bible and Greek lexicon on a sunlit seminary lectern"
-                referrerPolicy="no-referrer"
-                onError={() => setHeroImgFailed(true)}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
-                <BookOpen className="h-10 w-10 text-[#1E3A8A]/70" />
-                <p className="mt-3 font-serif text-lg font-medium text-[#1E293B]">
-                  New Life Fundamental Baptist Church - School of Ministry
+      {mode === 'home' && (
+        <>
+          {/* Editorial 2-Column Hero */}
+          <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border-b border-[#E5DFD3] pb-10">
+            <div className="lg:col-span-7 flex flex-col justify-between py-2">
+              <div>
+                <p className="text-xs font-medium tracking-wide text-[#57534E]">
+                  1st Semester &middot; SY 2026&ndash;2027
+                </p>
+                <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-semibold leading-[1.12] tracking-tight text-[#1E293B] max-w-2xl">
+                  Virtual Class, Lessons &amp; Study Materials
+                </h1>
+                <p className="mt-4 text-base leading-relaxed text-[#57534E] max-w-xl">
+                  Attend live Google Meet lectures, revisit automatically captured class recordings, and access class lessons and study materials for every module.
                 </p>
               </div>
-            )}
-          </div>
-        </div>
-      </section>
 
-      {/* 4-Column Operational Summary Strip (Below Hero Split) */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6 border-b border-[#E5DFD3] pb-8">
-        <div>
-          <p className="text-xs font-medium text-[#57534E]">Active Courses</p>
-          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
-            {courses.length}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-medium text-[#57534E]">Upcoming Meet Sessions</p>
-          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
-            {upcomingCount}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-medium text-[#57534E]">Attached Recordings</p>
-          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
-            {recordings.length}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-medium text-[#57534E]">Class Lessons</p>
-          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1E293B]">
-            {resources.length}
-          </p>
-        </div>
-      </section>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                {!isLiveAuth ? (
+                  <GoogleSignInButton
+                    onClick={onGoogleSignIn}
+                    disabled={true}
+                    label="Sign in with Google"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('classes')}
+                    className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Open Live Classes
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                )}
 
-      {feedback && (
-        <div className="flex items-center justify-between rounded-md border border-[#14532D]/25 bg-[#14532D]/5 px-4 py-3 text-sm text-[#14532D]">
-          <span>{feedback}</span>
-          <button
-            type="button"
-            onClick={() => setFeedback(null)}
-            className="text-xs font-semibold underline cursor-pointer"
-          >
-            Dismiss
-          </button>
-        </div>
+                {effectiveRole === 'webdev' ? (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('architecture')}
+                    className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-[#F5F1E8] px-4 py-2.5 text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Inspect Architecture Spec
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('resources')}
+                    className="inline-flex items-center gap-2 rounded-md border border-[#E5DFD3] bg-[#F5F1E8] px-4 py-2.5 text-sm font-medium text-[#1E293B] hover:bg-[#EBE6DF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  >
+                    Browse Class Lessons
+                  </button>
+                )}
+              </div>
+
+              {isLiveAuth && !hasWorkspaceToken && (
+                <p className="mt-4 text-xs text-[#9A3412]">
+                  Google Workspace OAuth token is not active in memory yet. Click Sign out and Sign in again when scheduling Meet sessions or syncing Drive recordings.
+                </p>
+              )}
+            </div>
+
+            <div className="lg:col-span-5">
+              <div className="relative h-64 lg:h-full min-h-[260px] overflow-hidden rounded-lg border border-[#E5DFD3] bg-[#F5F1E8]">
+                {!heroImgFailed ? (
+                  <img
+                    src={HERO_IMAGE_PATH}
+                    alt="Open study Bible and Greek lexicon on a sunlit seminary lectern"
+                    referrerPolicy="no-referrer"
+                    onError={() => setHeroImgFailed(true)}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
+                    <BookOpen className="h-10 w-10 text-[#1E3A8A]/70" />
+                    <p className="mt-3 font-serif text-lg font-medium text-[#1E293B]">
+                      New Life Fundamental Baptist Church
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* Seminary Courses Discovery Callout (Replaces inline course grid on Home) */}
+          <section className="rounded-lg border border-[#E5DFD3] bg-white p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold tracking-wide text-[#1E3A8A]">
+                School of Ministry
+              </p>
+              <p className="mt-1 text-xs font-medium tracking-wide text-[#57534E]">
+                1st Semester &middot; SY 2026&ndash;2027 &middot; {courses.length} Active Courses
+              </p>
+              <h2 className="mt-1.5 font-serif text-3xl font-semibold text-[#1E293B]">
+                Seminary Courses
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#57534E]">
+                Explore the full School of Ministry curriculum, view course syllabi taught by Francis, join scheduled Meet sessions, and open class lessons and study materials.
+              </p>
+            </div>
+
+            <div className="shrink-0">
+              <button
+                type="button"
+                onClick={() => onNavigateTab('courses')}
+                className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Discover Seminary Courses
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </section>
+        </>
       )}
 
-      {/* Course Catalog */}
-      <section>
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="font-serif text-3xl font-semibold text-[#1E293B]">
-              Seminary Courses
-            </h2>
-            <p className="mt-1 text-sm text-[#57534E]">
-              Select a course to access live Meet links, recorded lectures, syllabi, and class lessons.
-            </p>
-          </div>
-          {canManageCourses && (
-            <button
-              type="button"
-              onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              New Course
-            </button>
+      {mode === 'catalog' && (
+        <>
+          {feedback && (
+            <div className="flex items-center justify-between rounded-md border border-[#14532D]/25 bg-[#14532D]/5 px-4 py-3 text-sm text-[#14532D]">
+              <span>{feedback}</span>
+              <button
+                type="button"
+                onClick={() => setFeedback(null)}
+                className="text-xs font-semibold underline cursor-pointer"
+              >
+                Dismiss
+              </button>
+            </div>
           )}
-        </div>
+
+          {/* Seminary Courses Section inside Church of Ministry */}
+          <section>
+            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[#E5DFD3] pb-6">
+              <div>
+                <p className="text-xs font-medium tracking-wide text-[#57534E]">
+                  School of Ministry &middot; 1st Semester &middot; SY 2026&ndash;2027
+                </p>
+                <h2 className="mt-1 font-serif text-3xl font-semibold text-[#1E293B]">
+                  Seminary Courses
+                </h2>
+                <p className="mt-1.5 text-sm text-[#57534E]">
+                  Select a course to access live Meet links, recorded lectures, syllabi, and class lessons.
+                </p>
+              </div>
+              {canManageCourses && (
+                <button
+                  type="button"
+                  onClick={() => setShowCreateModal(true)}
+                  className="inline-flex items-center gap-2 rounded-md bg-[#1E3A8A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#172D6B] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  New Course
+                </button>
+              )}
+            </div>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {courses.map((course) => {
@@ -347,6 +359,8 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
           })}
         </div>
       </section>
+      </>
+      )}
 
       {/* Selected Course Module Drawer / Modal */}
       {selectedCourse && (
